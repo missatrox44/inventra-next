@@ -1,5 +1,5 @@
 'use client';
-
+import { useEffect, useState } from 'react';
 import { formatDate, isExpiringSoon, isExpired } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +15,16 @@ interface InventoryDetailClientProps {
 }
 
 export default function InventoryDetailClient({ item }: InventoryDetailClientProps) {
+
+  const [qrValue, setQrValue] = useState('');
+
+useEffect(() => {
+  if (typeof window !== 'undefined') {
+    setQrValue(`${window.location.origin}/inventory/${item.id}`);
+  }
+}, [item.id]);
+
+
   const getStatusInfo = (expirationDate: string) => {
     if (isExpired(expirationDate)) {
       return { 
@@ -165,8 +175,14 @@ export default function InventoryDetailClient({ item }: InventoryDetailClientPro
               </CardHeader>
               <CardContent className="flex justify-center">
                 <div className="p-4 bg-white border rounded-lg">
-                  <QRCodeSVG
+                  {/* <QRCodeSVG
                     value={`${window.location.origin}/inventory/${item.id}`}
+                    size={150}
+                    level="M"
+                    includeMargin
+                  /> */}
+                  <QRCodeSVG
+                    value={qrValue || 'https://example.com/inventory/' + item.id} 
                     size={150}
                     level="M"
                     includeMargin
@@ -184,7 +200,12 @@ export default function InventoryDetailClient({ item }: InventoryDetailClientPro
                 <Button 
                   variant="outline" 
                   className="w-full justify-start"
-                  onClick={() => window.print()}
+                  // onClick={() => window.print()}
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      window.print();
+                    }
+                  }}
                 >
                   <Package className="h-4 w-4 mr-2" />
                   Print Details
@@ -192,9 +213,15 @@ export default function InventoryDetailClient({ item }: InventoryDetailClientPro
                 <Button 
                   variant="outline" 
                   className="w-full justify-start"
+                  // onClick={() => {
+                  //   const url = `${window.location.origin}/inventory/${item.id}`;
+                  //   navigator.clipboard.writeText(url);
+                  // }}
                   onClick={() => {
-                    const url = `${window.location.origin}/inventory/${item.id}`;
-                    navigator.clipboard.writeText(url);
+                    if (typeof window !== 'undefined') {
+                      const url = `${window.location.origin}/inventory/${item.id}`;
+                      navigator.clipboard.writeText(url);
+                    }
                   }}
                 >
                   <Package className="h-4 w-4 mr-2" />
