@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/app/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { LogOut, Package, User, Home } from 'lucide-react';
 
@@ -26,7 +26,7 @@ export function Navbar() {
               <>
                 {user?.role && ['admin', 'editor'].includes(user.role) && (
                   <Link href="/dashboard">
-                    <Button variant="ghost\" className="text-gray-700 hover:text-blue-600">
+                    <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
                       <Home className="h-4 w-4 mr-2" />
                       Dashboard
                     </Button>
