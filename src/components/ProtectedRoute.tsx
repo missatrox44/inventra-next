@@ -12,7 +12,7 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ 
   children, 
-  allowedRoles = ['admin', 'editor'], 
+  allowedRoles = ['admin'],
   redirectTo = '/auth' 
 }: ProtectedRouteProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,7 +26,7 @@ export function ProtectedRoute({
     }
 
     if (allowedRoles.length > 0 && !hasRole(allowedRoles)) {
-      router.push('/');
+      router.push('/dashboard');
       return;
     }
   }, [isAuthenticated, hasRole, allowedRoles, router, redirectTo]);

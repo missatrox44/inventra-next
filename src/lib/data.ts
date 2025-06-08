@@ -106,14 +106,14 @@ export const usersData: User[] = [
     id: '4',
     name: 'Emma Davis',
     email: 'emma@inventra.com',
-    role: 'viewer',
+    role: 'editor',
     created_at: '2023-04-05T16:45:00Z'
   },
   {
     id: '5',
     name: 'James Brown',
     email: 'james@inventra.com',
-    role: 'viewer',
+    role: 'editor',
     created_at: '2023-05-12T11:30:00Z'
   }
 ];

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Users, UserCheck, Shield, Eye, Plus, Edit } from 'lucide-react';
 import { usersData } from '@/lib/data';
 import { formatDate } from '@/lib/utils';
@@ -14,6 +15,7 @@ import NewUserModal from '@/components/NewUserModal';
 
 export default function UsersPage() {
   const [isNewUserModalOpen, setIsNewUserModalOpen] = useState(false);
+  const router = useRouter();
 
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
@@ -21,8 +23,8 @@ export default function UsersPage() {
         return 'default';
       case 'editor':
         return 'secondary';
-      case 'viewer':
-        return 'outline';
+      // case 'viewer':
+      //   return 'outline';
       default:
         return 'outline';
     }
@@ -34,8 +36,8 @@ export default function UsersPage() {
         return Shield;
       case 'editor':
         return UserCheck;
-      case 'viewer':
-        return Eye;
+      // case 'viewer':
+      //   return Eye;
       default:
         return Users;
     }
@@ -154,11 +156,13 @@ export default function UsersPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link href={`/dashboard/users/${user.id}`}>
-                        <Button variant="ghost" size="sm">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => router.push(`/dashboard/users/${user.id}`)}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -204,7 +208,7 @@ export default function UsersPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        {/* <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <Eye className="h-5 w-5 text-gray-600" />
@@ -219,7 +223,7 @@ export default function UsersPage() {
               <li>• Read-only access</li>
             </ul>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       <NewUserModal

@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type UserRole = 'admin' | 'editor' | 'viewer';
+// export type UserRole = 'admin' | 'editor' | 'viewer';
+export type UserRole = 'admin' | 'editor';
 
 interface User {
   id: string;

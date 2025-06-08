@@ -24,7 +24,7 @@ interface NewUserModalProps {
 export default function NewUserModal({ isOpen, onClose }: NewUserModalProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("viewer");
+  const [role, setRole] = useState("editor");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ export default function NewUserModal({ isOpen, onClose }: NewUserModalProps) {
               <SelectContent>
                 <SelectItem value="admin">Administrator</SelectItem>
                 <SelectItem value="editor">Editor</SelectItem>
-                <SelectItem value="viewer">Viewer</SelectItem>
+                {/* <SelectItem value="viewer">Viewer</SelectItem> */}
               </SelectContent>
             </Select>
           </div>

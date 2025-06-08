@@ -13,7 +13,7 @@ import { Package, Lock, User } from 'lucide-react';
 export default function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<UserRole>('viewer');
+  const [role, setRole] = useState<UserRole>('editor');
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
@@ -95,7 +95,7 @@ export default function AuthPage() {
                   <SelectContent>
                     <SelectItem value="admin">Admin - Full Access</SelectItem>
                     <SelectItem value="editor">Editor - Edit Inventory</SelectItem>
-                    <SelectItem value="viewer">Viewer - View Only</SelectItem>
+                    {/* <SelectItem value="viewer">Viewer - View Only</SelectItem> */}
                   </SelectContent>
                 </Select>
               </div>
