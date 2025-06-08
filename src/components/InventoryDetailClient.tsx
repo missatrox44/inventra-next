@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
+
+// import { useEffect, useState } from 'react';
 import { formatDate, isExpiringSoon, isExpired } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Package, Calendar, User, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { QRCodeSVG } from 'qrcode.react';
+// import { QRCodeSVG } from 'qrcode.react';
 import { InventoryItem } from '@/lib/data';
 
 interface InventoryDetailClientProps {
@@ -16,13 +17,13 @@ interface InventoryDetailClientProps {
 
 export default function InventoryDetailClient({ item }: InventoryDetailClientProps) {
 
-  const [qrValue, setQrValue] = useState('');
+  // const [qrValue, setQrValue] = useState('');
 
-useEffect(() => {
-  if (typeof window !== 'undefined') {
-    setQrValue(`${window.location.origin}/inventory/${item.id}`);
-  }
-}, [item.id]);
+// useEffect(() => {
+//   if (typeof window !== 'undefined') {
+//     setQrValue(`${window.location.origin}/inventory/${item.id}`);
+//   }
+// }, [item.id]);
 
 
   const getStatusInfo = (expirationDate: string) => {
@@ -169,19 +170,21 @@ useEffect(() => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* QR Code */}
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="text-lg">QR Code</CardTitle>
               </CardHeader>
               <CardContent className="flex justify-center">
-                <div className="p-4 bg-white border rounded-lg">
+                <div className="p-4 bg-white border rounded-lg"> */}
+
                   {/* <QRCodeSVG
                     value={`${window.location.origin}/inventory/${item.id}`}
                     size={150}
                     level="M"
                     includeMargin
                   /> */}
-                  <QRCodeSVG
+
+                  {/* <QRCodeSVG
                     value={qrValue || 'https://example.com/inventory/' + item.id} 
                     size={150}
                     level="M"
@@ -189,7 +192,7 @@ useEffect(() => {
                   />
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Quick Actions */}
             <Card>
