@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Save, X, Upload } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { InventoryItem } from '@/lib/data';
+import { InventoryItem, dummyChangelog } from '@/lib/data';
 
 interface DashboardInventoryEditClientProps {
   item: InventoryItem;
@@ -32,13 +32,13 @@ export default function DashboardInventoryEditClient({ item }: DashboardInventor
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     // In a real app, you would update the item in your backend
     console.log('Updated item:', { ...item, ...formData, updated_at: new Date().toISOString() });
-    
+
     setIsLoading(false);
     router.push(`/dashboard/inventory/view/${item.id}`);
   };
@@ -149,7 +149,7 @@ export default function DashboardInventoryEditClient({ item }: DashboardInventor
                     className="object-cover"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="image">Change Image</Label>
                   <div className="flex items-center space-x-2">
@@ -182,8 +182,8 @@ export default function DashboardInventoryEditClient({ item }: DashboardInventor
               <CardTitle>Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full"
                 disabled={isLoading}
               >
@@ -199,7 +199,7 @@ export default function DashboardInventoryEditClient({ item }: DashboardInventor
                   </>
                 )}
               </Button>
-              
+
               <Link href={`/dashboard/inventory/view/${item.id}`} className="block">
                 <Button variant="outline" className="w-full">
                   <X className="h-4 w-4 mr-2" />
@@ -227,6 +227,24 @@ export default function DashboardInventoryEditClient({ item }: DashboardInventor
                 <p className="font-medium text-gray-500">Last Updated</p>
                 <p className="font-medium">{new Date(item.updated_at).toLocaleDateString()}</p>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Changelog</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {dummyChangelog.map((log, idx) => (
+                  <li key={idx} className="flex justify-between items-center border-b pb-2 last:border-b-0">
+                    <span>
+                      <span className="font-medium">{log.user}</span> — {log.action}
+                    </span>
+                    <span className="text-xs text-gray-500">{log.date}</span>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </div>

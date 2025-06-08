@@ -8,16 +8,18 @@ import { ArrowLeft, Package, Calendar, User, Clock, AlertTriangle, CheckCircle, 
 import Link from 'next/link';
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
-import { InventoryItem } from '@/lib/data';
+import { InventoryItem, dummyChangelog } from '@/lib/data';
 
 interface DashboardInventoryViewClientProps {
   item: InventoryItem;
 }
 
+
+
 export default function DashboardInventoryViewClient({ item }: DashboardInventoryViewClientProps) {
   const getStatusInfo = (expirationDate: string) => {
     if (isExpired(expirationDate)) {
-      return { 
+      return {
         badge: <Badge variant="destructive" className="gap-1"><AlertTriangle className="h-3 w-3" />Expired</Badge>,
         message: 'This item has expired and should be removed from inventory.',
         color: 'text-red-600'
@@ -27,13 +29,13 @@ export default function DashboardInventoryViewClient({ item }: DashboardInventor
       const expiry = new Date(expirationDate);
       const today = new Date();
       const diffDays = Math.ceil((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      return { 
+      return {
         badge: <Badge variant="secondary" className="gap-1"><AlertTriangle className="h-3 w-3" />Expiring Soon</Badge>,
         message: `This item expires in ${diffDays} days. Consider using it soon.`,
         color: 'text-yellow-600'
       };
     }
-    return { 
+    return {
       badge: <Badge variant="default" className="gap-1 bg-green-100 text-green-800 hover:bg-green-200"><CheckCircle className="h-3 w-3" />Good Condition</Badge>,
       message: 'This item is in good condition with plenty of time before expiration.',
       color: 'text-green-600'
@@ -84,7 +86,7 @@ export default function DashboardInventoryViewClient({ item }: DashboardInventor
                     <h2 className="text-2xl font-semibold mb-2">{item.name}</h2>
                     <p className="text-gray-600">{item.description}</p>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-gray-500">Status</span>
@@ -168,6 +170,24 @@ export default function DashboardInventoryViewClient({ item }: DashboardInventor
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Changelog</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {dummyChangelog.map((log, idx) => (
+                  <li key={idx} className="flex justify-between items-center border-b pb-2 last:border-b-0">
+                    <span>
+                      <span className="font-medium">{log.user}</span> — {log.action}
+                    </span>
+                    <span className="text-xs text-gray-500">{log.date}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Sidebar */}
@@ -204,16 +224,16 @@ export default function DashboardInventoryViewClient({ item }: DashboardInventor
                   Edit Item
                 </Button>
               </Link>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => window.print()}
               >
                 <Package className="h-4 w-4 mr-2" />
                 Print Details
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => {
                   const url = `${window.location.origin}/inventory/${item.id}`;

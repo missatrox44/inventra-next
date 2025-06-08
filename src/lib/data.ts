@@ -117,3 +117,9 @@ export const usersData: User[] = [
     created_at: '2023-05-12T11:30:00Z'
   }
 ];
+
+export const dummyChangelog = [
+  { user: 'Alice', action: 'Updated quantity', date: '2025-06-08 14:22' },
+  { user: 'Bob', action: 'Changed location', date: '2025-06-07 09:10' },
+  { user: 'Charlie', action: 'Created item', date: '2025-06-01 16:45' },
+];
