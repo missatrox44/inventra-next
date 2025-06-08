@@ -1,12 +1,19 @@
+"use client";
+
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Users, UserCheck, Shield, Eye } from 'lucide-react';
+import { Users, UserCheck, Shield, Eye, Plus } from 'lucide-react';
 import { usersData } from '@/lib/data';
 import { formatDate } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import NewUserModal from '@/components/NewUserModal';
 
 export default function UsersPage() {
+  const [isNewUserModalOpen, setIsNewUserModalOpen] = useState(false);
+
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
       case 'admin':
@@ -40,9 +47,15 @@ export default function UsersPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
-        <p className="text-gray-600 mt-1">Manage user accounts and permissions</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
+          <p className="text-gray-600 mt-1">Manage user accounts and permissions</p>
+        </div>
+        <Button onClick={() => setIsNewUserModalOpen(true)}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add New User
+        </Button>
       </div>
 
       {/* Stats Cards */}
@@ -199,6 +212,11 @@ export default function UsersPage() {
           </CardContent>
         </Card>
       </div>
+
+      <NewUserModal
+        isOpen={isNewUserModalOpen}
+        onClose={() => setIsNewUserModalOpen(false)}
+      />
     </div>
   );
 }
