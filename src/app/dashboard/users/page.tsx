@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Users, UserCheck, Shield, Eye, Plus } from 'lucide-react';
+import { Users, UserCheck, Shield, Eye, Plus, Edit } from 'lucide-react';
 import { usersData } from '@/lib/data';
 import { formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -118,6 +119,7 @@ export default function UsersPage() {
                 <TableHead>Role</TableHead>
                 <TableHead>Created</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -150,6 +152,13 @@ export default function UsersPage() {
                       <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-200">
                         Active
                       </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Link href={`/dashboard/users/${user.id}`}>
+                        <Button variant="ghost" size="sm">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 );
