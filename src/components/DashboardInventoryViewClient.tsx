@@ -9,14 +9,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
 import { InventoryItem, dummyChangelog } from '@/lib/data';
+import { useRef } from 'react';
 
 interface DashboardInventoryViewClientProps {
   item: InventoryItem;
 }
 
-
-
 export default function DashboardInventoryViewClient({ item }: DashboardInventoryViewClientProps) {
+  const qrRef = useRef<SVGSVGElement | null>(null);
+
   const getStatusInfo = (expirationDate: string) => {
     if (isExpired(expirationDate)) {
       return {
@@ -43,6 +44,35 @@ export default function DashboardInventoryViewClient({ item }: DashboardInventor
   };
 
   const statusInfo = getStatusInfo(item.expiration_date);
+
+  // Print only the QR code
+  const handlePrintQR = () => {
+    if (!qrRef.current) return;
+    const qrHtml = qrRef.current.outerHTML;
+    const printWindow = window.open('', '_blank', 'width=400,height=400');
+    if (printWindow) {
+      printWindow.document.write(`<!DOCTYPE html><html><head><title>Print QR Code</title></head><body style='display:flex;align-items:center;justify-content:center;height:100vh;'>${qrHtml}</body></html>`);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+    }
+  };
+
+  // Download QR code as SVG image
+  const handleDownloadQR = () => {
+    if (!qrRef.current) return;
+    const serializer = new XMLSerializer();
+    const source = serializer.serializeToString(qrRef.current);
+    const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `qr-inventory-${item.id}.svg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="space-y-6">
@@ -200,11 +230,20 @@ export default function DashboardInventoryViewClient({ item }: DashboardInventor
             <CardContent className="flex flex-col items-center space-y-4">
               <div className="p-4 bg-white border rounded-lg">
                 <QRCodeSVG
+                  ref={qrRef}
                   value={`${window.location.origin}/inventory/${item.id}`}
                   size={150}
                   level="M"
                   includeMargin
                 />
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={handlePrintQR}>
+                  Print QR Code
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleDownloadQR}>
+                  Download QR Code
+                </Button>
               </div>
               <p className="text-sm text-gray-500 text-center">
                 Scan to view item details
