@@ -23,7 +23,7 @@ export default function EditUserPage({ params }: { params: { id: string } }) {
 
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
-  const [role, setRole] = useState<UserRole>(user?.role || "viewer");
+  const [role, setRole] = useState<UserRole>(user?.role || "editor");
   const [status, setStatus] = useState("active");
 
   if (!user) {
@@ -110,7 +110,7 @@ export default function EditUserPage({ params }: { params: { id: string } }) {
                   <SelectContent>
                     <SelectItem value="admin">Administrator</SelectItem>
                     <SelectItem value="editor">Editor</SelectItem>
-                    <SelectItem value="viewer">Viewer</SelectItem>
+                    {/* <SelectItem value="viewer">Viewer</SelectItem> */}
                   </SelectContent>
                 </Select>
               </div>
