@@ -88,7 +88,7 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <div className="text-sm text-gray-500">
-                    {item.created_by}
+                    Last Edit: {item.created_by}
                   </div>
                 </div>
               ))}
